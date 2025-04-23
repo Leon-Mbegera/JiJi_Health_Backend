@@ -4,7 +4,8 @@ module Api
       def create
         @user = ::User.create(registration_params)
 
-        if @user.save
+        if @user.persisted?
+          @user.update(last_login_at: Time.current)
           token = generate_jwt_token(@user.id)
 
           render json: {
