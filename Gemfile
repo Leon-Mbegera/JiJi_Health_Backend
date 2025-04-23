@@ -45,3 +45,9 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
+
+gem 'active_model_serializers', '~> 0.10.15'
+gem 'bcrypt'
+gem 'faker'
+gem 'jwt'
+gem 'rack-cors'
