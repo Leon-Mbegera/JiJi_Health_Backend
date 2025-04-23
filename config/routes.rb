@@ -8,16 +8,9 @@ Rails.application.routes.draw do
   # API routess
   namespace :api do
     namespace :v1 do
-      # User Authentication Endpoints
-      # POST /api/v1/signup - Register a new user
       post 'signup', to: 'registrations#create'
-
-      # POST /api/v1/login - Authenticate user and return token
       post 'login', to: 'sessions#create'
-
-      # DELETE /api/v1/logout - Invalidate token
       delete 'logout', to: 'sessions#destroy'
-
     end
   end
 end
