@@ -8,4 +8,14 @@ module JsonWebToken
     payload = { user_id: user_id, exp: 8.hours.from_now.to_i }
     JWT.encode(payload, SECRET_KEY)
   end
+
+  def decode_jwt_token(token)
+    begin
+      decoded_token = JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
+      decoded_token[0]
+
+    rescue JWT::DecodeError => e
+      nil
+    end
+  end
 end
