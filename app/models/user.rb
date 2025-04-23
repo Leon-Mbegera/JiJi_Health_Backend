@@ -9,4 +9,6 @@ class User < ApplicationRecord
                       message: 'must be a valid email address'
                     }
   validates :password, :password_confirmation, presence: true
+
+  has_many :tasks, dependent: :destroy
 end
