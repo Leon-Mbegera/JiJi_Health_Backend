@@ -6,18 +6,24 @@ module Api
 
       def index
         @tasks = @current_user.tasks.all
-        render json: @tasks, status: :ok
+        render json: {
+          tasks: ActiveModelSerializers::SerializableResource.new(@tasks, each_serializer: TaskSerializer)
+        }, status: :ok
       end
 
       def show
-        render json: @task, status: :ok
+        render json: {
+          task: TaskSerializer.new(@task)
+        }, status: :ok
       end
 
       def create
         @task = @current_user.tasks.new(task_params)
 
         if @task.save
-          render json: @task, status: :created, location: api_v1_task_url(@task)
+          render json: {
+            task: TaskSerializer.new(@task)
+          }, status: :created
         else
           render json: @task.errors, status: :unprocessable_entity
         end
@@ -25,7 +31,9 @@ module Api
 
       def update
         if @task.update(task_params)
-          render json: @task, status: :ok
+          render json: {
+            task: TaskSerializer.new(@task)
+          }, status: :ok
         else
           render json: @task.errors, status: :unprocessable_entity
         end
@@ -39,7 +47,7 @@ module Api
       private
 
       def set_task
-        @task = @current_user.tasks.find!(params[:id])
+        @task = @current_user.tasks.find(params[:id])
       end
 
       def task_params

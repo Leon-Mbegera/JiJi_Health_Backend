@@ -6,18 +6,24 @@ module Api
 
       def index
         @categories = Category.all
-        render json: @categories, status: :ok
+        render json: {
+          categories: ActiveModelSerializers::SerializableResource.new(@categories, each_serializer: CategorySerializer)
+        }, status: :ok
       end
 
       def show
-        render json: @category, status: :ok
+        render json: {
+          category: CategorySerializer.new(@category)
+        }, status: :ok
       end
 
       def create
         @category = Category.new(category_params)
 
         if @category.save
-          render json: @category, status: :created, location: api_v1_category_url(@category)
+          render json: {
+            category: CategorySerializer.new(@category)
+          }, status: :created
         else
           render json: @category.errors, status: :unprocessable_entity
         end
@@ -25,7 +31,9 @@ module Api
 
       def update
         if @category.update(category_params)
-          render json: @category, status: :ok
+          render json: {
+            category: CategorySerializer.new(@category)
+          }, status: :ok
         else
           render json: @category.errors, status: :unprocessable_entity
         end
@@ -39,7 +47,7 @@ module Api
       private
 
       def set_category
-        @category = Category.find!(params[:id])
+        @category = Category.find(params[:id])
       end
 
       def category_params
