@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_23_093506) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_24_191237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,6 +20,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_23_093506) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "denylisted_tokens", force: :cascade do |t|
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_denylisted_tokens_on_token"
   end
 
   create_table "tasks", force: :cascade do |t|
