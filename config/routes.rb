@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :tasks
       resources :categories
+      resource :profile, only: [:show, :update]
       post 'signup', to: 'registrations#create'
       post 'login', to: 'sessions#create'
       delete 'logout', to: 'sessions#destroy'
